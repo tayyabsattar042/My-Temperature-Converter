@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center bg-lime-600">
+    <div class="bg-blue-700 p-8 rounded shadow-md w-192">
+        <h1 class="text-2xl font-semibold decoration-dotted mb-10">Temperature Converter</h1>
+        <div class="flex space-x-4">
+            <input type="number" id="inputTemperature" class="w-4/4 p-2 border rounded" placeholder="Enter temperature">
+            <select id="fromScale" class="w-4/4 p-2 border rounded">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+            <span class="flex items-center justify-center w-1/4">To</span>
+            <select id="toScale" class="w-4/4 p-4 border rounded">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </div>
+        <button id="convertButton" class="mt-4 bg-green-500 text-white px-10 py-4 rounded hover:bg-red-600">Convert</button>
+        <p id="result" class="mt-4 text-lg font-semibold"></p>
+    </div>
+
+    <script>
+        document.getElementById('convertButton').addEventListener('click', function () {
+            const inputTemperature = parseFloat(document.getElementById('inputTemperature').value);
+            const fromScale = document.getElementById('fromScale').value;
+            const toScale = document.getElementById('toScale').value;
+            let result;
+
+            if (fromScale === toScale) {
+                result = inputTemperature;
+            } else if (fromScale === 'celsius' && toScale === 'fahrenheit') {
+                result = (inputTemperature * 9/5) + 32;
+            } else if (fromScale === 'celsius' && toScale === 'kelvin') {
+                result = inputTemperature + 273.15;
+            } else if (fromScale === 'fahrenheit' && toScale === 'celsius') {
+                result = (inputTemperature - 32) * 5/9;
+            } else if (fromScale === 'fahrenheit' && toScale === 'kelvin') {
+                result = (inputTemperature - 32) * 5/9 + 273.15;
+            } else if (fromScale === 'kelvin' && toScale === 'celsius') {
+                result = inputTemperature - 273.15;
+            } else if (fromScale === 'kelvin' && toScale === 'fahrenheit') {
+                result = (inputTemperature - 273.15) * 9/5 + 32;
+            }
+
+            document.getElementById('result').textContent = `${inputTemperature} ${fromScale.toUpperCase()} is ${result.toFixed(2)} ${toScale.toUpperCase()}`;
+        });
+    </script>
+</body>
+</html>
